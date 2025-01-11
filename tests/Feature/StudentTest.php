@@ -2,19 +2,25 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Database\Factories\StudentFactory;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StudentTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_student_list(): void
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        // Arrange 
+        StudentFactory::new()->count(5)->create();
+        //Act 
+        // $response= $this->get(route('student.list'));
+        $response= $this->json('get',route('student.list'));
+        //Assert
+        $response->assertStatus(200)->assertJsonCount(5);
     }
 }
