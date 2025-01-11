@@ -23,4 +23,25 @@ class StudentTest extends TestCase
         //Assert
         $response->assertStatus(200)->assertJsonCount(5);
     }
+
+    public function test_student_create(){
+        $response = $this->json('get',route('student.create'));
+        $response->assertStatus(200)->assertSeeText("");
+    }
+
+    public function test_student_store(){
+        //Arrange
+        $data = [
+            'roll' => 6,
+            'name' => 'Al Mahfuz',
+            'email' => 'almahfuz@gmail.com',
+            'phone' => '015656565',
+        ];
+        //Act
+        $this->withoutExceptionHandling();
+        $response = $this->post(route('student.store'),$data);
+        //Assert
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('students',$data);
+    }
 }
