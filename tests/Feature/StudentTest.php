@@ -44,4 +44,10 @@ class StudentTest extends TestCase
         $response->assertStatus(200);
         $this->assertDatabaseHas('students',$data);
     }
+
+    public function test_student_delete(){
+        // Arrange
+        // Act
+        //Assert
+    }
 }
