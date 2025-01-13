@@ -47,7 +47,11 @@ class StudentTest extends TestCase
 
     public function test_student_delete(){
         // Arrange
+        $data = StudentFactory::new()->create();
         // Act
+        $response = $this->delete(route('student.destroy',['id'=> $data->id]));
         //Assert
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('students',['id'=> $data->id]);
     }
 }
