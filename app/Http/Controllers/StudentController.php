@@ -40,5 +40,10 @@ class StudentController extends Controller
         return response()->json($student);
     }
 
+    public function edit($id){
+        $student = Student::find($id);
+        return response()->json($student);
+    }
+
    
 }

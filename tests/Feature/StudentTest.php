@@ -54,4 +54,18 @@ class StudentTest extends TestCase
         $response->assertStatus(200);
         $this->assertDatabaseMissing('students',['id'=> $data->id]);
     }
+
+    public function test_student_edit(){
+        // Arrange
+        $data = StudentFactory::new()->create();
+        // Act
+        $response = $this->get(route('student.edit',['id'=> $data->id]));
+        // Assert
+        $response->assertStatus(200)->assertJson([
+            'roll' => $data->roll,
+            'name' => $data->name,
+            'email' => $data->email,
+            'phone' => $data->phone,
+        ]);
+    }
 }
