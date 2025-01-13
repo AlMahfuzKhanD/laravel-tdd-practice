@@ -45,5 +45,23 @@ class StudentController extends Controller
         return response()->json($student);
     }
 
+    public function update(Request $request,$id){
+        $validated = $request->validate([
+            'roll' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+        ]);
+
+        $student = Student::find($id);
+        $student->roll = $request->roll;
+        $student->name = $request->name;
+        $student->email = $request->email;
+        $student->phone = $request->phone;
+        $student->save();
+
+        return response()->json($student);
+    }
+
    
 }

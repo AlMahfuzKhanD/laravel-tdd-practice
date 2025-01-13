@@ -68,4 +68,23 @@ class StudentTest extends TestCase
             'phone' => $data->phone,
         ]);
     }
+
+    public function test_student_update(){
+        //Arrange
+        $data = StudentFactory::new()->create();
+        $updatedData = [
+            'roll' => 20,
+            'name' => "edit name",
+            'email' => "a@a.com",
+            'phone' => "0191111"
+        ];
+        //Act
+        $this->withoutExceptionHandling();
+        $response = $this->put(route('student.update',['id'=> $data->id]),$updatedData);
+        //Assert
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('students',$updatedData);
+        $this->assertDatabaseMissing('students',$data->toArray());
+        
+    }
 }
